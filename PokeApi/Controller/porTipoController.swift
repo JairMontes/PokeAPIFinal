@@ -157,14 +157,14 @@ PokemonViewModel.GetByElemento(elemento: self.pokemonName) { result, error in
 func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     
     self.pokemonName = self.pokemonsList[indexPath.row].name!
-    self.performSegue(withIdentifier: "SegueDetalle1", sender: self)
+    self.performSegue(withIdentifier: "SegueDetalleTipo1", sender: self)
     
     
 }
 override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     //controlar que hacer antes de ir a la siguiente vista
     
-    if segue.identifier == "SegueDetalle1" {
+    if segue.identifier == "SegueDetalleTipo1" {
         let formControl = segue.destination as! DetalleController
         formControl.pokemonName = self.pokemonName
         formControl.url = self.url

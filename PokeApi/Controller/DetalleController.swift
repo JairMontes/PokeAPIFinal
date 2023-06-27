@@ -14,7 +14,7 @@ class DetalleController: UIViewController {
     //    var Stat = Specs<Stats>(stats: [], types: [])
     var pokemonStats : [Stats] = []
     var pokemonTypes : [Types] = []
-    //    let colors: [String: UIColor] = ["normal": UIColor(named: "normal")!]
+    var tipo : String = ""
     
     private let PokemonImageView: UIImageView = {
         let imageView = UIImageView()
@@ -126,19 +126,36 @@ class DetalleController: UIViewController {
         return label
     }()
     
-    private let lblTipo : UILabel = {
-        let lblNombre = UILabel()
-        lblNombre.numberOfLines = 0
-        lblNombre.textAlignment = .center
-        lblNombre.font = UIFont(name: "Arial Rounded MT Bold", size: 25)
-        lblNombre.translatesAutoresizingMaskIntoConstraints = false
-        // lblNombre.backgroundColor = UIColor.red
-        lblNombre.layer.cornerRadius = 15
-        lblNombre.layer.masksToBounds = true
-        lblNombre.layer.borderWidth = 3
-        lblNombre.layer.borderColor = UIColor.blue.cgColor
-        return lblNombre
-    }()
+//    private let lblTipo : UILabel = {
+//        let lblNombre = UILabel()
+//        lblNombre.numberOfLines = 0
+//        lblNombre.textAlignment = .center
+//        lblNombre.font = UIFont(name: "Arial Rounded MT Bold", size: 25)
+//        lblNombre.translatesAutoresizingMaskIntoConstraints = false
+//        // lblNombre.backgroundColor = UIColor.red
+//        lblNombre.layer.cornerRadius = 15
+//        lblNombre.layer.masksToBounds = true
+//        lblNombre.layer.borderWidth = 3
+//        lblNombre.layer.borderColor = UIColor.blue.cgColor
+//        return lblNombre
+//    }()
+    
+    private lazy var btnTipo : UIButton = {
+            var config = UIButton.Configuration.filled()
+//            config.title = "Enviar tipo"
+            let btnTipos = UIButton(type: .system)
+            btnTipos.addTarget(self, action: #selector(enviartipo), for: .touchUpInside)
+            btnTipos.configuration = config
+            btnTipos.layer.cornerRadius = 15
+            btnTipos.layer.masksToBounds = true
+            btnTipos.layer.borderWidth = 3
+           btnTipos.layer.borderColor = UIColor.blue.cgColor
+//        btnTipos.titleLabel?.font = UIFont.italicSystemFont(ofSize: 40)
+            btnTipos.translatesAutoresizingMaskIntoConstraints = false
+            // btnTipos.backgroundColor = UIColor.red
+        
+            return btnTipos
+        }()
     
     
     
@@ -161,7 +178,8 @@ class DetalleController: UIViewController {
         view.addSubview(lblDefense)
         view.addSubview(lblSepcialAttack)
         view.addSubview(lblSepcialDefense)
-        view.addSubview(lblTipo)
+//        view.addSubview(lblTipo)
+        view.addSubview(btnTipo)
         
         NSLayoutConstraint.activate([
             PokemonImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -198,9 +216,12 @@ class DetalleController: UIViewController {
             lblSepcialDefense.bottomAnchor.constraint(equalTo: lblSepcialAttack.bottomAnchor, constant: 45),
             lblSepcialDefense.leftAnchor.constraint(equalTo: view.leftAnchor),
             lblSepcialDefense.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            lblTipo.bottomAnchor.constraint(equalTo: lblSepcialDefense.bottomAnchor, constant: 45),
-            lblTipo.leftAnchor.constraint(equalTo: view.leftAnchor),
-            lblTipo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            lblTipo.bottomAnchor.constraint(equalTo: lblSepcialDefense.bottomAnchor, constant: 45),
+//            lblTipo.leftAnchor.constraint(equalTo: view.leftAnchor),
+//            lblTipo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            btnTipo.bottomAnchor.constraint(equalTo: lblSepcialDefense.bottomAnchor, constant: 45),
+            btnTipo.leftAnchor.constraint(equalTo: view.leftAnchor),
+            btnTipo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
         ])
         
@@ -222,7 +243,26 @@ class DetalleController: UIViewController {
         //            }
         //        }
         
-        
+    }
+    
+    
+      
+       @objc func enviartipo(){
+           
+           print("aprete el boton1")
+           self.tipo = self.pokemonTypes[0].type!.name!
+           self.performSegue(withIdentifier: "SegueDetalleTipo", sender: self)
+       }
+       override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+         
+           if segue.identifier == "SegueDetalleTipo" {
+               let formControl = segue.destination as! porTipoController
+               
+               formControl.pokemonName = self.tipo
+               
+               
+           }
+       }
         
         func updateUI(){
             PokemonViewModel.GetByName(namePokemon: self.pokemonName ) { result, error in
@@ -275,7 +315,8 @@ class DetalleController: UIViewController {
                                 self.lblAttack.text = "  \(self.pokemonStats[2].stat!.name!) : \(self.pokemonStats[2].base_stat!)"
                                 self.lblSepcialAttack.text = "  \(self.pokemonStats[3].stat!.name!) : \(self.pokemonStats[3].base_stat!)"
                                 self.lblSepcialDefense.text = "  \(self.pokemonStats[4].stat!.name!) : \(self.pokemonStats[4].base_stat!)"
-                                self.lblTipo.text = "Tipo: \(self.pokemonTypes[0].type!.name!)"
+//                                self.btnTipo.setTitle = "Tipo: \(self.pokemonTypes[0].type!.name!)"
+                                self.btnTipo.setTitle("Tipo: \(self.pokemonTypes[0].type!.name!)", for: .normal)
 //                                self.lblSpeed.text = "Speed: \((self.Stat.stats[5].base_stat?.description)!)"
                                 
                                 //                                  if let color = colors[self.pokemonTypes[0].type!.name!]{
@@ -286,172 +327,178 @@ class DetalleController: UIViewController {
                                 if self.pokemonTypes[0].type!.name! == "normal"{
                                     //                                  view.backgroundColor = .green
                                     self.lblNombre.backgroundColor = .systemPink
-                                    self.lblTipo.backgroundColor = .systemPink
+                                    self.btnTipo.backgroundColor = .systemPink
                                     self.lblAbilities.backgroundColor = .systemPink
                                     self.PokemonImageView.backgroundColor = .systemPink
-                                    self.lblTipo.textColor = .white
+                                    self.btnTipo.tintColor = .white
                                     self.lblNombre.textColor = .white
                                     self.lblAbilities.textColor = .white
+                                    self.btnTipo.layer.borderColor = UIColor.systemPink.cgColor
                                 }
                                 
                                 if self.pokemonTypes[0].type!.name! == "grass"{
-                                                                    //                                  view.backgroundColor = .green
+                                                                   
                                     self.lblNombre.backgroundColor = .green
-                                    self.lblTipo.backgroundColor = .green
+                                    self.btnTipo.backgroundColor = .green
                                     self.lblAbilities.backgroundColor = .green
                                     self.PokemonImageView.backgroundColor = .green
-                                    self.lblTipo.textColor = .red
+                                    self.btnTipo.tintColor = .white
+                                    self.btnTipo.layer.borderColor = UIColor.green.cgColor
+//                                    self.btnTipo.baseForegroundColor = .red
                                     self.lblNombre.textColor = .black
                                     self.lblAbilities.textColor = .red
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "fighting"{
-                                                                    //                                  view.backgroundColor = .green
+                                                                    
                                     self.lblNombre.backgroundColor = .blue
-                                    self.lblTipo.backgroundColor = .blue
+                                    self.btnTipo.backgroundColor = .blue
                                     self.lblAbilities.backgroundColor = .blue
                                     self.PokemonImageView.backgroundColor = .blue
-                                    self.lblTipo.textColor = .white
+                                    self.btnTipo.tintColor = .white
                                     self.lblNombre.textColor = .white
                                     self.lblAbilities.textColor = .white
                                     self.lblNombre.layer.borderColor = UIColor.green.cgColor
-                                    self.lblTipo.layer.borderColor = UIColor.green.cgColor
+                                    self.btnTipo.layer.borderColor = UIColor.blue.cgColor
                                     self.lblAbilities.layer.borderColor = UIColor.green.cgColor
                                     self.PokemonImageView.layer.borderColor = UIColor.green.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "flying"{
-                                                                    //                                  view.backgroundColor = .green
+                                                                    
                                     self.lblNombre.backgroundColor = .purple
-                                    self.lblTipo.backgroundColor = .purple
+                                    self.btnTipo.backgroundColor = .purple
                                     self.lblAbilities.backgroundColor = .purple
                                     self.PokemonImageView.backgroundColor = .purple
+                                    self.btnTipo.tintColor = .white
+                                    self.btnTipo.layer.borderColor = UIColor.purple.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "poison"{
-                                                                    //                                  view.backgroundColor = .green
+                                                                    
                                     self.lblNombre.backgroundColor = .black
-                                    self.lblTipo.backgroundColor = .black
+                                    self.btnTipo.backgroundColor = .black
                                     self.lblAbilities.backgroundColor = .black
                                     self.PokemonImageView.backgroundColor = .black
-                                    self.lblTipo.textColor = .white
+                                    self.btnTipo.tintColor = .white
                                     self.lblNombre.textColor = .white
                                     self.lblAbilities.textColor = .white
+                                    self.btnTipo.layer.borderColor = UIColor.black.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "ground"{
-                                                                    //                                  view.backgroundColor = .green
+                                                                   
                                     self.lblNombre.backgroundColor = .clear
-                                    self.lblTipo.backgroundColor = .clear
+                                    self.btnTipo.backgroundColor = .clear
                                     self.lblAbilities.backgroundColor = .clear
                                     self.PokemonImageView.backgroundColor = .clear
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "rock"{
-                                                                    //                                  view.backgroundColor = .green
+                                                                    
                                     self.lblNombre.backgroundColor = .cyan
-                                    self.lblTipo.backgroundColor = .cyan
+                                    self.btnTipo.backgroundColor = .cyan
                                     self.lblAbilities.backgroundColor = .cyan
                                     self.PokemonImageView.backgroundColor = .cyan
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "bug"{
-                                                                    //                                  view.backgroundColor = .green
+                                                                   
                                     self.lblNombre.backgroundColor = .gray
-                                    self.lblTipo.backgroundColor = .gray
+                                    self.btnTipo.backgroundColor = .gray
                                     self.lblAbilities.backgroundColor = .gray
                                     self.PokemonImageView.backgroundColor = .gray
-                                    self.lblTipo.textColor = .white
+//                                    self.btnTipo.textColor = .white
                                     self.lblNombre.textColor = .white
                                     self.lblAbilities.textColor = .white
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "ghost"{
-                                                                    //                                  view.backgroundColor = .green
+                                                                    
                                     self.lblNombre.backgroundColor = .systemIndigo
-                                    self.lblTipo.backgroundColor = .systemIndigo
+                                    self.btnTipo.backgroundColor = .systemIndigo
                                     self.lblAbilities.backgroundColor = .systemIndigo
                                     self.PokemonImageView.backgroundColor = .systemIndigo
-                                    self.lblTipo.textColor = .white
+//                                    self.btnTipo.textColor = .white
                                     self.lblNombre.textColor = .white
                                     self.lblAbilities.textColor = .white
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "steel"{
-                                                                    //                                  view.backgroundColor = .green
+                                                                   
                                     self.lblNombre.backgroundColor = .systemMint
-                                    self.lblTipo.backgroundColor = .systemMint
+                                    self.btnTipo.backgroundColor = .systemMint
                                     self.lblAbilities.backgroundColor = .systemMint
                                     self.PokemonImageView.backgroundColor = .systemMint
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "fire"{
                                     
                                     self.lblNombre.backgroundColor = .orange
-                                    self.lblTipo.backgroundColor = .orange
+                                    self.btnTipo.backgroundColor = .orange
                                     self.lblAbilities.backgroundColor = .orange
                                     self.PokemonImageView.backgroundColor = .orange
-                                    self.lblTipo.textColor = .white
+//                                    self.btnTipo.textColor = .white
                                     self.lblNombre.textColor = .white
                                     self.lblAbilities.textColor = .white
                                 }
                                 if self.pokemonTypes[0].type!.name! == "water"{
                                                             
                                     self.lblNombre.backgroundColor = .systemTeal
-                                    self.lblTipo.backgroundColor = .systemTeal
+                                    self.btnTipo.backgroundColor = .systemTeal
                                     self.lblAbilities.backgroundColor = .systemTeal
                                     self.PokemonImageView.backgroundColor = .systemTeal
-                                    self.lblTipo.textColor = .white
+//                                    self.btnTipo.textColor = .white
                                     self.lblNombre.textColor = .white
                                     self.lblAbilities.textColor = .white
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "electric"{
                                                             
                                     self.lblNombre.backgroundColor = .yellow
-                                    self.lblTipo.backgroundColor = .yellow
+                                    self.btnTipo.backgroundColor = .yellow
                                     self.lblAbilities.backgroundColor = .yellow
                                     self.PokemonImageView.backgroundColor = .yellow
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "psychic"{
                                                             
                                     self.lblNombre.backgroundColor = .red
-                                    self.lblTipo.backgroundColor = .red
+                                    self.btnTipo.backgroundColor = .red
                                     self.lblAbilities.backgroundColor = .red
                                     self.PokemonImageView.backgroundColor = .red
-                                    self.lblTipo.textColor = .white
+//                                    self.btnTipo.textColor = .white
                                     self.lblNombre.textColor = .white
                                     self.lblAbilities.textColor = .white
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "ice"{
                                                             
                                     self.lblNombre.layer.borderColor = UIColor.systemTeal.cgColor
-                                    self.lblTipo.layer.borderColor = UIColor.systemTeal.cgColor
+                                    self.btnTipo.layer.borderColor = UIColor.systemTeal.cgColor
                                     self.lblAbilities.layer.borderColor = UIColor.systemTeal.cgColor
                                     self.PokemonImageView.layer.borderColor = UIColor.systemTeal.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "dragon"{
                                                             
                                     self.lblNombre.layer.borderColor = UIColor.red.cgColor
-                                    self.lblTipo.layer.borderColor = UIColor.red.cgColor
+                                    self.btnTipo.layer.borderColor = UIColor.red.cgColor
                                     self.lblAbilities.layer.borderColor = UIColor.red.cgColor
                                     self.PokemonImageView.layer.borderColor = UIColor.red.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "dark"{
                                                             
                                     self.lblNombre.layer.borderColor = UIColor.black.cgColor
-                                    self.lblTipo.layer.borderColor = UIColor.black.cgColor
+                                    self.btnTipo.layer.borderColor = UIColor.black.cgColor
                                     self.lblAbilities.layer.borderColor = UIColor.black.cgColor
                                     self.PokemonImageView.layer.borderColor = UIColor.black.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "fairy"{
                                                             
                                     self.lblNombre.layer.borderColor = UIColor.systemPink.cgColor
-                                    self.lblTipo.layer.borderColor = UIColor.systemPink.cgColor
+                                    self.btnTipo.layer.borderColor = UIColor.systemPink.cgColor
                                     self.lblAbilities.layer.borderColor = UIColor.systemPink.cgColor
                                     self.PokemonImageView.layer.borderColor = UIColor.systemPink.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "unknown"{
                                                             
                                     self.lblNombre.layer.borderColor = UIColor.orange.cgColor
-                                    self.lblTipo.layer.borderColor = UIColor.orange.cgColor
+                                    self.btnTipo.layer.borderColor = UIColor.orange.cgColor
                                     self.lblAbilities.layer.borderColor = UIColor.orange.cgColor
                                     self.PokemonImageView.layer.borderColor = UIColor.orange.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "shadow"{
                                                             
                                     self.lblNombre.layer.borderColor = UIColor.systemIndigo.cgColor
-                                    self.lblTipo.layer.borderColor = UIColor.systemIndigo.cgColor
+                                    self.btnTipo.layer.borderColor = UIColor.systemIndigo.cgColor
                                     self.lblAbilities.layer.borderColor = UIColor.systemIndigo.cgColor
                                     self.PokemonImageView.layer.borderColor = UIColor.systemIndigo.cgColor
                                                                 }
@@ -467,7 +514,7 @@ class DetalleController: UIViewController {
             }
         }
     }
-}
+
 
 
 

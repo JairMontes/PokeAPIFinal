@@ -325,7 +325,7 @@
                     <connections>
                         <outlet property="collectionPorTipo" destination="TCG-uo-YAS" id="wPi-If-aKb"/>
                         <outlet property="lblNombre" destination="OdP-eU-0LP" id="yg3-pi-Ix2"/>
-                        <segue destination="GAe-SX-f4b" kind="show" identifier="SegueDetalle1" id="mjY-8P-COt"/>
+                        <segue destination="GAe-SX-f4b" kind="show" identifier="SegueDetalleTipo1" id="mjY-8P-COt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="npA-nR-q3e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
