@@ -131,26 +131,26 @@ extension TiposController: UICollectionViewDelegate,UICollectionViewDataSource{
             
             cell.layer.cornerRadius = 10
             cell.layer.masksToBounds = true
-            self.text = pokemonsList[indexPath.row].url!
-            
-            let textId = self.text.split(separator: "/")
-            // print(textId.last!)
-            let imageURLString = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(textId.last!).png"
-            self.url = imageURLString
-            
-            
-            
-            UIImage.loadImageFromURL(imageURLString) { (image) in
-                if let image = image {
-                    // La imagen se cargó exitosamente desde la URL
-                    cell.ImageView.image = image
-                    //  print(image)
-                    //   print("la imagen se cargo correcramente")
-                    
-                } else {
-                    print("error al cargar la imagen")
-                }
-            }
+//            self.text = pokemonsList[indexPath.row].url!
+//
+//            let textId = self.text.split(separator: "/")
+//            // print(textId.last!)
+//            let imageURLString = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(textId.last!).png"
+//            self.url = imageURLString
+//
+//
+//
+//            UIImage.loadImageFromURL(imageURLString) { (image) in
+//                if let image = image {
+//                    // La imagen se cargó exitosamente desde la URL
+//                    cell.ImageView.image = image
+//                    //  print(image)
+//                    //   print("la imagen se cargo correcramente")
+//
+//                } else {
+//                    print("error al cargar la imagen")
+//                }
+//            }
 //        }
         
         
