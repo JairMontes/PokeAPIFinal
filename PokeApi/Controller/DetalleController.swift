@@ -11,7 +11,6 @@ class DetalleController: UIViewController {
     
     var pokemonName : String = ""
     var url : String = ""
-    //    var Stat = Specs<Stats>(stats: [], types: [])
     var pokemonStats : [Stats] = []
     var pokemonTypes : [Types] = []
     var tipo : String = ""
@@ -44,26 +43,12 @@ class DetalleController: UIViewController {
         return label
 
     }()
-//    private let lblNombre : UILabel = {
-//            let lblNombre = UILabel()
-//            lblNombre.numberOfLines = 0
-//            lblNombre.textAlignment = .center
-////            lblNombre.text = "Elemento"
-//            lblNombre.font = UIFont(name: "Arial Rounded MT Bold", size: 25)
-//            lblNombre.translatesAutoresizingMaskIntoConstraints = false
-//            // lblNombre.backgroundColor = UIColor.red
-//            lblNombre.layer.cornerRadius = 15
-//            lblNombre.layer.masksToBounds = true
-//            return lblNombre
-//        }()
     
     private let lblAbilities : UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .center
         label.text = "Abilities"
-//        label.textColor = .blue
-//        label.textColor = .red
         label.font = UIFont(name: "Arial Rounded MT Bold", size: 28)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.layer.borderWidth = 3
@@ -126,34 +111,17 @@ class DetalleController: UIViewController {
         return label
     }()
     
-//    private let lblTipo : UILabel = {
-//        let lblNombre = UILabel()
-//        lblNombre.numberOfLines = 0
-//        lblNombre.textAlignment = .center
-//        lblNombre.font = UIFont(name: "Arial Rounded MT Bold", size: 25)
-//        lblNombre.translatesAutoresizingMaskIntoConstraints = false
-//        // lblNombre.backgroundColor = UIColor.red
-//        lblNombre.layer.cornerRadius = 15
-//        lblNombre.layer.masksToBounds = true
-//        lblNombre.layer.borderWidth = 3
-//        lblNombre.layer.borderColor = UIColor.blue.cgColor
-//        return lblNombre
-//    }()
-    
     private lazy var btnTipo : UIButton = {
             var config = UIButton.Configuration.filled()
-//            config.title = "Enviar tipo"
             let btnTipos = UIButton(type: .system)
             btnTipos.addTarget(self, action: #selector(enviartipo), for: .touchUpInside)
             btnTipos.configuration = config
             btnTipos.layer.cornerRadius = 15
             btnTipos.layer.masksToBounds = true
             btnTipos.layer.borderWidth = 3
-           btnTipos.layer.borderColor = UIColor.blue.cgColor
-//        btnTipos.titleLabel?.font = UIFont.italicSystemFont(ofSize: 40)
+            btnTipos.layer.borderColor = UIColor.blue.cgColor
             btnTipos.translatesAutoresizingMaskIntoConstraints = false
-            // btnTipos.backgroundColor = UIColor.red
-        
+
             return btnTipos
         }()
     
@@ -162,11 +130,7 @@ class DetalleController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
-        
         lblNombre.text = String(pokemonName)
-        
         
         view.addSubview(lblNombre)
         
@@ -178,7 +142,6 @@ class DetalleController: UIViewController {
         view.addSubview(lblDefense)
         view.addSubview(lblSepcialAttack)
         view.addSubview(lblSepcialDefense)
-//        view.addSubview(lblTipo)
         view.addSubview(btnTipo)
         
         NSLayoutConstraint.activate([
@@ -186,39 +149,35 @@ class DetalleController: UIViewController {
             PokemonImageView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
             PokemonImageView.widthAnchor.constraint(equalToConstant: 300),
             PokemonImageView.heightAnchor.constraint(equalToConstant: 300),
-            //            textLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            //            textLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            //            textLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            lblNombre.bottomAnchor.constraint(equalTo: PokemonImageView.bottomAnchor, constant: 45),
-//            lblNombre.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            lblNombre.centerYAnchor.constraint(equalTo: view.layoutMarginsGuide.centerYAnchor),
-            //            lblNombre.bottomAnchor.constraint(equalTo: lblAbilities.bottomAnchor, constant: 45),
-            //            lblNombre.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            //            lblNombre.centerYAnchor.constraint(equalTo: view.layoutMarginsGuide.centerYAnchor),
+    
             lblNombre.bottomAnchor.constraint(equalTo: PokemonImageView.bottomAnchor, constant: 45),
             lblNombre.leftAnchor.constraint(equalTo: view.leftAnchor),
-            lblNombre.centerXAnchor.constraint(equalTo: view.centerXAnchor),        lblAbilities.bottomAnchor.constraint(equalTo: lblNombre.bottomAnchor, constant: 45),
+            lblNombre.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            lblAbilities.bottomAnchor.constraint(equalTo: lblNombre.bottomAnchor, constant: 45),
             lblAbilities.leftAnchor.constraint(equalTo: view.leftAnchor),
             lblAbilities.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             lblHp.bottomAnchor.constraint(equalTo: lblAbilities.bottomAnchor, constant: 45),
             lblHp.leftAnchor.constraint(equalTo: view.leftAnchor),
             lblHp.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
             lblAttack.bottomAnchor.constraint(equalTo: lblHp.bottomAnchor, constant: 45),
             lblAttack.leftAnchor.constraint(equalTo: view.leftAnchor),
             lblAttack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+           
             lblDefense.bottomAnchor.constraint(equalTo: lblAttack.bottomAnchor, constant: 45),
             lblDefense.leftAnchor.constraint(equalTo: view.leftAnchor),
             lblDefense.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+           
             lblSepcialAttack.bottomAnchor.constraint(equalTo: lblDefense.bottomAnchor, constant: 45),
             lblSepcialAttack.leftAnchor.constraint(equalTo: view.leftAnchor),
             lblSepcialAttack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          
             lblSepcialDefense.bottomAnchor.constraint(equalTo: lblSepcialAttack.bottomAnchor, constant: 45),
             lblSepcialDefense.leftAnchor.constraint(equalTo: view.leftAnchor),
             lblSepcialDefense.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            lblTipo.bottomAnchor.constraint(equalTo: lblSepcialDefense.bottomAnchor, constant: 45),
-//            lblTipo.leftAnchor.constraint(equalTo: view.leftAnchor),
-//            lblTipo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
             btnTipo.bottomAnchor.constraint(equalTo: lblSepcialDefense.bottomAnchor, constant: 45),
             btnTipo.leftAnchor.constraint(equalTo: view.leftAnchor),
             btnTipo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -226,30 +185,10 @@ class DetalleController: UIViewController {
         ])
         
         updateUI()
-        
-        //        PokemonViewModel.Stat(url: url) { result, error in
-        //            if let resultSource = result{
-        //                self.Stat = resultSource
-        //                DispatchQueue.main.async {
-        //                    self.lblHp.text = "Hp: \((self.Stat.stats[0].base_stat?.description)!)"
-        //                    self.lblAttack.text = "Attack: \((self.Stat.stats[1].base_stat?.description)!)"
-        //                    self.lblDefense.text = "Defense: \((self.Stat.stats[2].base_stat?.description)!)"
-        //                    self.lblSepcialAttack.text = "SepcialAttack: \((self.Stat.stats[3].base_stat?.description)!)"
-        //                    self.lblSepcialDefense.text = "SepcialDefense: \((self.Stat.stats[4].base_stat?.description)!)"
-        //                    self.lblSpeed.text = "Speed: \((self.Stat.stats[5].base_stat?.description)!)"
-        //
-        //
-        //                }
-        //            }
-        //        }
-        
     }
-    
-    
       
        @objc func enviartipo(){
-           
-           print("aprete el boton1")
+          
            self.tipo = self.pokemonTypes[0].type!.name!
            self.performSegue(withIdentifier: "SegueDetalleTipo", sender: self)
        }
@@ -290,24 +229,21 @@ class DetalleController: UIViewController {
                         let imageURLString = "\(result!.sprites!.front_default!)"
                         UIImage.loadImageFromURL(imageURLString) { [self] (image) in
                             if let image = image {
-                                // La imagen se cargó exitosamente desde la URL
-                                // self.imageView.image = image
                                 self.PokemonImageView.image = image
                                 
                                 
                             } else {
-                                print("error al cargar la imagen")
+                                print("No se cargo la imagen")
                             }
                             let imageURLString = "\(result!.sprites!.front_shiny!)"
                             UIImage.loadImageFromURL(imageURLString) { [self] (image) in
                                 if let image = image {
-                                    // La imagen se cargó exitosamente desde la URL
-                                    
+                                  
                                     self.PokemonImageView.image = image
                                     
                                     
                                 } else {
-                                    print("error al cargar la imagen")
+                                    print("No se cargo la imagen")
                                 }
                                 self.lblNombre.text = result?.name
                                 self.lblHp.text = "  \(self.pokemonStats[0].stat!.name!) : \(self.pokemonStats[0].base_stat!)"
@@ -315,15 +251,8 @@ class DetalleController: UIViewController {
                                 self.lblAttack.text = "  \(self.pokemonStats[2].stat!.name!) : \(self.pokemonStats[2].base_stat!)"
                                 self.lblSepcialAttack.text = "  \(self.pokemonStats[3].stat!.name!) : \(self.pokemonStats[3].base_stat!)"
                                 self.lblSepcialDefense.text = "  \(self.pokemonStats[4].stat!.name!) : \(self.pokemonStats[4].base_stat!)"
-//                                self.btnTipo.setTitle = "Tipo: \(self.pokemonTypes[0].type!.name!)"
                                 self.btnTipo.setTitle("Tipo: \(self.pokemonTypes[0].type!.name!)", for: .normal)
-//                                self.lblSpeed.text = "Speed: \((self.Stat.stats[5].base_stat?.description)!)"
-                                
-                                //                                  if let color = colors[self.pokemonTypes[0].type!.name!]{
-                                //                                                                 DispatchQueue.main.async {
-                                //                                                                     self.lblTipo.backgroundColor = color
-                                //                                                                     self.lblNombre.backgroundColor = color
-                                //                                                                     self.PokemonImageView.backgroundColor = color
+
                                 if self.pokemonTypes[0].type!.name! == "normal"{
                                     //                                  view.backgroundColor = .green
                                     self.lblNombre.backgroundColor = .systemPink
@@ -344,7 +273,6 @@ class DetalleController: UIViewController {
                                     self.PokemonImageView.backgroundColor = .green
                                     self.btnTipo.tintColor = .white
                                     self.btnTipo.layer.borderColor = UIColor.green.cgColor
-//                                    self.btnTipo.baseForegroundColor = .red
                                     self.lblNombre.textColor = .black
                                     self.lblAbilities.textColor = .red
                                                                 }
@@ -369,6 +297,8 @@ class DetalleController: UIViewController {
                                     self.lblAbilities.backgroundColor = .purple
                                     self.PokemonImageView.backgroundColor = .purple
                                     self.btnTipo.tintColor = .white
+                                    self.lblNombre.textColor = .white
+                                    self.lblAbilities.textColor = .white
                                     self.btnTipo.layer.borderColor = UIColor.purple.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "poison"{
@@ -388,6 +318,7 @@ class DetalleController: UIViewController {
                                     self.btnTipo.backgroundColor = .clear
                                     self.lblAbilities.backgroundColor = .clear
                                     self.PokemonImageView.backgroundColor = .clear
+                                    self.btnTipo.tintColor = .white
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "rock"{
                                                                     
@@ -395,6 +326,9 @@ class DetalleController: UIViewController {
                                     self.btnTipo.backgroundColor = .cyan
                                     self.lblAbilities.backgroundColor = .cyan
                                     self.PokemonImageView.backgroundColor = .cyan
+                                    self.btnTipo.tintColor = .white
+                                    self.btnTipo.layer.borderColor = UIColor.cyan.cgColor
+                                    
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "bug"{
                                                                    
@@ -402,9 +336,10 @@ class DetalleController: UIViewController {
                                     self.btnTipo.backgroundColor = .gray
                                     self.lblAbilities.backgroundColor = .gray
                                     self.PokemonImageView.backgroundColor = .gray
-//                                    self.btnTipo.textColor = .white
+                                    self.btnTipo.tintColor = .white
                                     self.lblNombre.textColor = .white
                                     self.lblAbilities.textColor = .white
+                                    self.btnTipo.layer.borderColor = UIColor.gray.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "ghost"{
                                                                     
@@ -412,9 +347,10 @@ class DetalleController: UIViewController {
                                     self.btnTipo.backgroundColor = .systemIndigo
                                     self.lblAbilities.backgroundColor = .systemIndigo
                                     self.PokemonImageView.backgroundColor = .systemIndigo
-//                                    self.btnTipo.textColor = .white
                                     self.lblNombre.textColor = .white
                                     self.lblAbilities.textColor = .white
+                                    self.btnTipo.tintColor = .white
+                                    self.btnTipo.layer.borderColor = UIColor.systemIndigo.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "steel"{
                                                                    
@@ -422,6 +358,8 @@ class DetalleController: UIViewController {
                                     self.btnTipo.backgroundColor = .systemMint
                                     self.lblAbilities.backgroundColor = .systemMint
                                     self.PokemonImageView.backgroundColor = .systemMint
+                                    self.btnTipo.tintColor = .white
+                                    self.btnTipo.layer.borderColor = UIColor.systemMint.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "fire"{
                                     
@@ -429,9 +367,10 @@ class DetalleController: UIViewController {
                                     self.btnTipo.backgroundColor = .orange
                                     self.lblAbilities.backgroundColor = .orange
                                     self.PokemonImageView.backgroundColor = .orange
-//                                    self.btnTipo.textColor = .white
+                                    self.btnTipo.tintColor = .white
                                     self.lblNombre.textColor = .white
                                     self.lblAbilities.textColor = .white
+                                    self.btnTipo.layer.borderColor = UIColor.orange.cgColor
                                 }
                                 if self.pokemonTypes[0].type!.name! == "water"{
                                                             
@@ -439,9 +378,10 @@ class DetalleController: UIViewController {
                                     self.btnTipo.backgroundColor = .systemTeal
                                     self.lblAbilities.backgroundColor = .systemTeal
                                     self.PokemonImageView.backgroundColor = .systemTeal
-//                                    self.btnTipo.textColor = .white
+                                   self.btnTipo.tintColor = .white
                                     self.lblNombre.textColor = .white
                                     self.lblAbilities.textColor = .white
+                                    self.btnTipo.layer.borderColor = UIColor.systemTeal.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "electric"{
                                                             
@@ -449,6 +389,8 @@ class DetalleController: UIViewController {
                                     self.btnTipo.backgroundColor = .yellow
                                     self.lblAbilities.backgroundColor = .yellow
                                     self.PokemonImageView.backgroundColor = .yellow
+                                    self.btnTipo.tintColor = .white
+                                    self.btnTipo.layer.borderColor = UIColor.yellow.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "psychic"{
                                                             
@@ -456,9 +398,10 @@ class DetalleController: UIViewController {
                                     self.btnTipo.backgroundColor = .red
                                     self.lblAbilities.backgroundColor = .red
                                     self.PokemonImageView.backgroundColor = .red
-//                                    self.btnTipo.textColor = .white
                                     self.lblNombre.textColor = .white
                                     self.lblAbilities.textColor = .white
+                                    self.btnTipo.tintColor = .white
+                                    self.btnTipo.layer.borderColor = UIColor.red.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "ice"{
                                                             
@@ -466,12 +409,14 @@ class DetalleController: UIViewController {
                                     self.btnTipo.layer.borderColor = UIColor.systemTeal.cgColor
                                     self.lblAbilities.layer.borderColor = UIColor.systemTeal.cgColor
                                     self.PokemonImageView.layer.borderColor = UIColor.systemTeal.cgColor
+                                    self.btnTipo.tintColor = .white
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "dragon"{
                                                             
                                     self.lblNombre.layer.borderColor = UIColor.red.cgColor
                                     self.btnTipo.layer.borderColor = UIColor.red.cgColor
                                     self.lblAbilities.layer.borderColor = UIColor.red.cgColor
+                                    self.btnTipo.tintColor = .white
                                     self.PokemonImageView.layer.borderColor = UIColor.red.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "dark"{
@@ -480,12 +425,15 @@ class DetalleController: UIViewController {
                                     self.btnTipo.layer.borderColor = UIColor.black.cgColor
                                     self.lblAbilities.layer.borderColor = UIColor.black.cgColor
                                     self.PokemonImageView.layer.borderColor = UIColor.black.cgColor
+                                    self.btnTipo.tintColor = .white
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "fairy"{
                                                             
                                     self.lblNombre.layer.borderColor = UIColor.systemPink.cgColor
                                     self.btnTipo.layer.borderColor = UIColor.systemPink.cgColor
                                     self.lblAbilities.layer.borderColor = UIColor.systemPink.cgColor
+                                    self.PokemonImageView.layer.borderColor = UIColor.systemPink.cgColor
+                                    self.btnTipo.tintColor = .white
                                     self.PokemonImageView.layer.borderColor = UIColor.systemPink.cgColor
                                                                 }
                                 if self.pokemonTypes[0].type!.name! == "unknown"{
@@ -502,10 +450,6 @@ class DetalleController: UIViewController {
                                     self.lblAbilities.layer.borderColor = UIColor.systemIndigo.cgColor
                                     self.PokemonImageView.layer.borderColor = UIColor.systemIndigo.cgColor
                                                                 }
-                                
-                                //                                                                 }
-                                //                                                             }
-                                //
                             }
                         }
                     }

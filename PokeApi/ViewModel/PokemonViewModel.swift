@@ -25,7 +25,7 @@ class PokemonViewModel {
                 }
                 
             }else{
-                print("Error en la peticion get")
+                print("Error")
                 responseResult(nil,error)
             }
             
@@ -51,7 +51,7 @@ class PokemonViewModel {
                     responseResult(nil,errorSource)
                 }
             }else{
-                print("Error en la peticion get by name y id")
+                print("No se encontro el pokemon")
                 
                 responseResult(nil,error)
             }
@@ -116,7 +116,7 @@ class PokemonViewModel {
                 }
                 
             }else{
-                print("Error en la peticion de busqueda por elemento")
+                print("Error, no se encontro el tipo")
                 responseResult(nil,error)
             }
             

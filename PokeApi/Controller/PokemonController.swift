@@ -84,40 +84,39 @@ class PokemonController: UIViewController {
         self.pokemonName = ""
         self.pokemonName = txtBuscar.text!.lowercased()
         guard txtBuscar.text != "" else {
-           
-                    lblVacio.text =  "El campo no puede ser vacio"
-                    txtBuscar.layer.borderColor = UIColor.red.cgColor
-                    txtBuscar.layer.borderWidth = 2
-                    return
-                }
-                if txtBuscar.text! == ""{
-                   
-                    self.updateUI()
-                }else{
-                    lblVacio.text =  ""
-                    txtBuscar.layer.borderColor = UIColor.black.cgColor
-                    txtBuscar.layer.borderWidth = 2
-                   
-        PokemonViewModel.GetByName(namePokemon: self.pokemonName) { result, error in
-            self.pokemonsList.removeAll()
             
-            if let resultSource = result {
-                DispatchQueue.main.async{
-                    var objpoke = Results()
-                    objpoke.name = result?.name
-                    self.id = String(result!.id!)
-                    var url1 : String = "https://pokeapi.co/api/v2/pokemon/\(self.id)"
-                    objpoke.url = url1
-                    self.pokemonsList.append(objpoke)
-                    self.collectionPokemon.reloadData()
+            lblVacio.text =  "El campo no puede ser vacio"
+            txtBuscar.layer.borderColor = UIColor.red.cgColor
+            txtBuscar.layer.borderWidth = 2
+            return
+        }
+        if txtBuscar.text! == ""{
+            
+            self.updateUI()
+        }else{
+            lblVacio.text =  ""
+            txtBuscar.layer.borderColor = UIColor.black.cgColor
+            txtBuscar.layer.borderWidth = 2
+            
+            PokemonViewModel.GetByName(namePokemon: self.pokemonName) { result, error in
+                self.pokemonsList.removeAll()
+                
+                if let resultSource = result {
+                    DispatchQueue.main.async{
+                        var objpoke = Results()
+                        objpoke.name = result?.name
+                        self.id = String(result!.id!)
+                        var url1 : String = "https://pokeapi.co/api/v2/pokemon/\(self.id)"
+                        objpoke.url = url1
+                        self.pokemonsList.append(objpoke)
+                        self.collectionPokemon.reloadData()
+                        
+                    }
                 }
             }
         }
     }
-    }
 }
-    
-    
 
 extension PokemonController: UICollectionViewDelegate,UICollectionViewDataSource{
     
@@ -132,9 +131,6 @@ extension PokemonController: UICollectionViewDelegate,UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "pokemonCell", for: indexPath) as! pokemonCell
-//        cell.layer.cornerRadius = 10
-//        cell.layer.masksToBounds = true
-//        
         
         self.text = pokemonsList[indexPath.row].url!
         
@@ -147,27 +143,16 @@ extension PokemonController: UICollectionViewDelegate,UICollectionViewDataSource
         
         UIImage.loadImageFromURL(imageURLString) { (image) in
             if let image = image {
-                // La imagen se cargó exitosamente desde la URL
+                
                 cell.ImageView.image = image
-                //  print(image)
-                //   print("la imagen se cargo correcramente")
                 
             } else {
-                print("error al cargar la imagen")
+                print("No se cargó la imagen")
             }
         }
         pokemonsList[indexPath.row].url
         //        cell.lblNombre.text = "#\(textId.last!) \(pokemonsList[indexPath.row].name!)"
         cell.lblNombre.text = pokemonsList[indexPath.row].name!
-        
-        //        cell.lblText.isHidden = true
-        //        cell.lblText.text = pokemonsList[indexPath.row].url
-        //  cell.btnPokeball.setImage(UIImage(named: "pokeball1"), for: .normal)
-        //        cell.imageViewPokeball.image = UIImage(named: "pokeball")
-        
-        
-        
-        
         
         return cell
     }
@@ -177,18 +162,14 @@ extension PokemonController: UICollectionViewDelegate,UICollectionViewDataSource
         
         self.pokemonName = self.pokemonsList[indexPath.row].name!
         self.performSegue(withIdentifier: "SegueDetalle", sender: self)
-        
-        
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //controlar que hacer antes de ir a la siguiente vista
-        
+      
         if segue.identifier == "SegueDetalle" {
             let formControl = segue.destination as! DetalleController
             formControl.pokemonName = self.pokemonName
             formControl.url = self.url
-            //formControl.id = self.id
-            
             
         }
         

@@ -29,66 +29,6 @@ class TiposController: UIViewController {
         updateUI()
     }
     
-    //    func updateUI(){
-    //        self.pokemonsList.removeAll()
-    //        collectionTipo.reloadData()
-    //        PokemonViewModel.GetPokemon(paginacion: self.paginacion) { result, error in
-    //            DispatchQueue.main.async {
-    //                if result! != nil {
-    //
-    //                    for objPokemon in result!.results {
-    //
-    //
-    //
-    //                        self.pokemonsList.append(objPokemon)
-    //
-    //                    }
-    //                    self.collectionTipo.reloadData()
-    //                    // print(self.pokemonName)
-    //                }
-    //                self.collectionTipo.reloadData()
-    //
-    //            }
-    //
-    //        }
-    //    }
-    //}
-//    @IBAction func btnBuscar(_ sender: Any) {
-//        self.pokemonName = txtBuscar.text!
-//        PokemonViewModel.GetByElemento(elemento: self.pokemonName) { result, error in
-//            self.pokemonsList.removeAll()
-//            if let resultSource = result {
-//                self.result = resultSource
-//                for ObjPokemon in result!.pokemon!{
-//                    var pokemonElement = Results()
-//                    pokemonElement.name = ObjPokemon.pokemon.name
-//                    pokemonElement.url = ObjPokemon.pokemon.url
-//                    self.pokemonsList.append(pokemonElement)
-//                }
-//                DispatchQueue.main.async {
-//                    self.collectionTipo.reloadData()
-//                }
-//
-//            }else {
-//                print("No existe esa categoria")//podria ser una alerta que no hay categoria
-//                DispatchQueue.main.async {
-//                    let alert = UIAlertController(title: "Mensaje", message: "No existe ese nombre,id o elemento.Tambien puede estar mal escrito.", preferredStyle: .alert)
-//                    let action = UIAlertAction(title: "Aceptar", style: .default)
-//                    alert.addAction(action)
-//
-//                    self.present(alert, animated: true)
-//                    self.pokemonsList.removeAll()
-//                    self.collectionTipo.reloadData()
-//
-//                }
-//            }
-//
-//        }
-//
-//    }
-//
-    
-    
     func updateUI(){
         PokemonViewModel.GetAllTipo { result, error in
             if let resultSource = result{
@@ -119,41 +59,13 @@ extension TiposController: UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "pokemonCell", for: indexPath) as! pokemonCell
         
-        
-//        self.txtBuscar.text = ""
-//        if txtBuscar.text == ""{
+
             cell.lblNombre.text = pokemonsList[indexPath.row].name!
             cell.ImageView.image = UIImage(named: "\(pokemonsList[indexPath.row].name!)")
-//        }
-//        if txtBuscar.text != ""{
-            
-            cell.lblNombre.text = pokemonsList[indexPath.row].name!
             
             cell.layer.cornerRadius = 10
             cell.layer.masksToBounds = true
-//            self.text = pokemonsList[indexPath.row].url!
-//
-//            let textId = self.text.split(separator: "/")
-//            // print(textId.last!)
-//            let imageURLString = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(textId.last!).png"
-//            self.url = imageURLString
-//
-//
-//
-//            UIImage.loadImageFromURL(imageURLString) { (image) in
-//                if let image = image {
-//                    // La imagen se cargó exitosamente desde la URL
-//                    cell.ImageView.image = image
-//                    //  print(image)
-//                    //   print("la imagen se cargo correcramente")
-//
-//                } else {
-//                    print("error al cargar la imagen")
-//                }
-//            }
-//        }
-        
-        
+
         return cell
     }
     
@@ -166,15 +78,12 @@ extension TiposController: UICollectionViewDelegate,UICollectionViewDataSource{
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //controlar que hacer antes de ir a la siguiente vista
-        
+       
         if segue.identifier == "SeguePorTipo" {
             let formControl = segue.destination as! porTipoController
             formControl.pokemonName = self.pokemonName
             formControl.url = self.url
-            //formControl.id = self.id
-            
-            
+        
         }
         
     }
