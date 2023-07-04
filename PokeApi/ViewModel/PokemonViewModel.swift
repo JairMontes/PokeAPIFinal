@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import UIKit
+import CoreData
 
 class PokemonViewModel {
     static func GetPokemon (paginacion: String,responseResult : @escaping(Pokemons?,Error?) -> Void) {
@@ -56,54 +58,34 @@ class PokemonViewModel {
                 responseResult(nil,error)
             }
         }.resume()
-       
+        
     }
     
-//    static func Stat(url : String, resp: @escaping(Specs<Stats>?, Error?) -> Void){
-//                //let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(next)")!
-//        let url = URL(string: "\(url)")!
-//                URLSession.shared.dataTask(with: url){data, response, error in
-//                    let httpResponse = response as! HTTPURLResponse
-//                    if 200...299 ~= httpResponse.statusCode{
-//                        if let dataSource = data{
-//                            let decoder = JSONDecoder()
-//                            let jsonString = String(data: dataSource, encoding: String.Encoding.utf8)
-//                           // print(jsonString)
-//                            let result = try! decoder.decode(Specs<Stats>.self, from: dataSource)
-//                            resp(result, nil)
-//                        }
-//                        if let errorSource = error{
-//                            resp(nil, errorSource)
-//                        }
-//                    }
-//                    
-//                }.resume()
-//            }
     static func GetAllTipo(resp: @escaping(Root?, Error?) -> Void){
-                     let url = URL(string: "https://pokeapi.co/api/v2/type")!
-                     
-                     URLSession.shared.dataTask(with: url){data, response, error in
-                         let httpResponse = response as! HTTPURLResponse
-                         if 200...299 ~= httpResponse.statusCode{
-                             if let dataSource = data{
-                                 let decoder = JSONDecoder()
-                                 let jsonString = String(data: dataSource, encoding: String.Encoding.utf8)
-                                 let result = try! decoder.decode(Root.self, from: dataSource)
-                                 resp(result, nil)
-                             }
-                             if let errorSource = error{
-                                 resp(nil, errorSource)
-                             }
-                         }
-                         
-                     }.resume()
-                 }
+        let url = URL(string: "https://pokeapi.co/api/v2/type")!
+        
+        URLSession.shared.dataTask(with: url){data, response, error in
+            let httpResponse = response as! HTTPURLResponse
+            if 200...299 ~= httpResponse.statusCode{
+                if let dataSource = data{
+                    let decoder = JSONDecoder()
+                    let jsonString = String(data: dataSource, encoding: String.Encoding.utf8)
+                    let result = try! decoder.decode(Root.self, from: dataSource)
+                    resp(result, nil)
+                }
+                if let errorSource = error{
+                    resp(nil, errorSource)
+                }
+            }
+            
+        }.resume()
+    }
     
     static func GetByElemento (elemento: String,responseResult : @escaping(Tipos?,Error?) -> Void) {
         
         let url = URL(string: "https://pokeapi.co/api/v2/type/\(elemento)")!
         URLSession.shared.dataTask(with: url) { data, response, error in
-             let httpResponse = response as! HTTPURLResponse
+            let httpResponse = response as! HTTPURLResponse
             if httpResponse.statusCode == 200 {
                 if let dataSource = data{
                     let decoder = JSONDecoder()
@@ -120,10 +102,41 @@ class PokemonViewModel {
                 responseResult(nil,error)
             }
             
-           
-            
         }.resume()
         
-        //  return result
     }
+    
+
+    
+    //    CoreData
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    func Add(_ user : LoginPokemon) -> Result {
+        
+        var result = Result()
+       
+        do{
+            let context = appDelegate.persistentContainer.viewContext
+            let entity = NSEntityDescription.entity(forEntityName: "Login", in: context)
+            let pokemon = NSManagedObject(entity: entity!, insertInto: context)
+            
+            // Primero: Que se inserta. Segundo: En donde (columna/llave)
+            pokemon.setValue(user.username, forKey: "username")
+            pokemon.setValue(user.password, forKey: "password")
+            
+            
+            // Guardar
+            try context.save()
+            
+            result.Correct = true
+        }
+        catch let error{
+            result.Correct = false
+            result.ErrorMessage = error.localizedDescription
+            result.Ex = error
+        }
+        
+        return result
+    }
+    
 }

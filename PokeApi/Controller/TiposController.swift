@@ -43,7 +43,7 @@ class TiposController: UIViewController {
         }
     }
 }
-    
+
 
 extension TiposController: UICollectionViewDelegate,UICollectionViewDataSource{
     
@@ -59,13 +59,13 @@ extension TiposController: UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "pokemonCell", for: indexPath) as! pokemonCell
         
-
-            cell.lblNombre.text = pokemonsList[indexPath.row].name!
-            cell.ImageView.image = UIImage(named: "\(pokemonsList[indexPath.row].name!)")
-            
-            cell.layer.cornerRadius = 10
-            cell.layer.masksToBounds = true
-
+        
+        cell.lblNombre.text = pokemonsList[indexPath.row].name!
+        cell.ImageView.image = UIImage(named: "\(pokemonsList[indexPath.row].name!)")
+        
+        cell.layer.cornerRadius = 10
+        cell.layer.masksToBounds = true
+        
         return cell
     }
     
@@ -78,12 +78,12 @@ extension TiposController: UICollectionViewDelegate,UICollectionViewDataSource{
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-       
+        
         if segue.identifier == "SeguePorTipo" {
             let formControl = segue.destination as! porTipoController
             formControl.pokemonName = self.pokemonName
             formControl.url = self.url
-        
+            
         }
         
     }

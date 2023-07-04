@@ -8,7 +8,7 @@
 import UIKit
 
 class PokemonController: UIViewController {
-
+    
     @IBOutlet weak var txtBuscar: UITextField!
     
     @IBOutlet weak var collectionPokemon: UICollectionView!
@@ -30,12 +30,12 @@ class PokemonController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         collectionPokemon.delegate = self
         collectionPokemon.dataSource = self
         collectionPokemon.register(UINib(nibName: "pokemonCell", bundle: .main), forCellWithReuseIdentifier:"pokemonCell")
         updateUI()
-
+        
     }
     
     func updateUI(){
@@ -61,7 +61,7 @@ class PokemonController: UIViewController {
             }
         }
     }
-
+    
     
     @IBAction func btnNext(_ sender: Any) {
         self.paginacion = self.nextPaginacion
@@ -94,6 +94,7 @@ class PokemonController: UIViewController {
             
             self.updateUI()
         }else{
+            
             lblVacio.text =  ""
             txtBuscar.layer.borderColor = UIColor.black.cgColor
             txtBuscar.layer.borderWidth = 2
@@ -165,7 +166,7 @@ extension PokemonController: UICollectionViewDelegate,UICollectionViewDataSource
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-      
+        
         if segue.identifier == "SegueDetalle" {
             let formControl = segue.destination as! DetalleController
             formControl.pokemonName = self.pokemonName
@@ -176,24 +177,19 @@ extension PokemonController: UICollectionViewDelegate,UICollectionViewDataSource
     }
 }
 
-
-
-
-
-
 extension UIImage {
     static func loadImageFromURL(_ urlString: String, completion: @escaping (UIImage?) -> Void) {
         guard let url = URL(string: urlString) else {
             completion(nil)
             return
         }
-
+        
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data, let image = UIImage(data: data) else {
                 completion(nil)
                 return
             }
-
+            
             DispatchQueue.main.async {
                 completion(image)
             }
